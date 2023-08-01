@@ -164,6 +164,7 @@ class MemoryNormalUserRepositoryTest {
         repository.save(normalUser2);
         //when
         List<NormalUser> result = repository.findAll();
+        //then
         Assertions.assertThat(result.size()).isEqualTo(2);
 
     }

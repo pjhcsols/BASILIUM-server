@@ -14,8 +14,8 @@ public class MemorySuperUserRepository implements SuperUserRepository{
     }
 
     @Override
-    public void delete(SuperUser normalUser) {
-        store.remove(normalUser.getId());
+    public void delete(SuperUser superUser) {
+        store.remove(superUser.getId());
     }
 
     @Override
