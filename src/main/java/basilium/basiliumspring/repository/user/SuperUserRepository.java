@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface SuperUserRepository {
     SuperUser save(SuperUser superUser);
     Optional<SuperUser> findById(String id);
-    Optional<SuperUser> findByEmail(String id);
-    Optional<SuperUser> findByName(String Name);
-    Optional<SuperUser> findByPhoneNumber(String id);
+    Optional<SuperUser> findByEmail(String emailAddress);
+    Optional<SuperUser> findByName(String name);
+    Optional<SuperUser> findByPhoneNumber(String phoneNumber);
     List<SuperUser> findAll();
 }

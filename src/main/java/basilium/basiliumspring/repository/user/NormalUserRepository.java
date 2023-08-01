@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface NormalUserRepository {
     NormalUser save(NormalUser normalUser);
     Optional<NormalUser> findById(String id);
-    Optional<NormalUser> findByEmail(String id);
-    Optional<NormalUser> findByName(String Name);
-    Optional<NormalUser> findByPhoneNumber(String id);
+    Optional<NormalUser> findByEmail(String emailAddress);
+    Optional<NormalUser> findByName(String name);
+    Optional<NormalUser> findByPhoneNumber(String phoneNumber);
     List<NormalUser> findAll();
 }
