@@ -1,4 +1,4 @@
-package basilium.basiliumspring.user;
+package basilium.basiliumspring.domain.user;
 
 public class User {
     private String id;
