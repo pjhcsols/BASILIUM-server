@@ -1,12 +1,12 @@
 package basilium.basiliumspring.repository.product;
 
 import basilium.basiliumspring.domain.product.Product;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import java.util.List;
 
-// 카테고리name와 productCategoriId 연결
 class MemoryProductRepositoryTest {
         private MemoryProductRepository memoryProductRepository;
 
@@ -38,24 +38,65 @@ class MemoryProductRepositoryTest {
         }
 
         @Test
-        void getProductById() {
+        void getProductById() { //id로 상품 조회
+            // Given
             Product product1 = new Product(1L, 2L,"product A",59000L,"상품은 ~이렇습니다","http");
             Product product2 = new Product(3L, 4L,"product B",88000L,"상품은 ~이렇습니다","http");
 
+            // When
             memoryProductRepository.addProduct(product1);
             memoryProductRepository.addProduct(product2);
 
-            Product foundProduct1 = memoryProductRepository.getProductById(1L);
-            Product foundProduct2 = memoryProductRepository.getProductById(3L);
+            // Then
+            Product foundProduct1 = memoryProductRepository.getProductById(product1.getProductId());
+            Product foundProduct2 = memoryProductRepository.getProductById(product2.getProductId());
 
             assertNotNull(foundProduct1);
-            assertEquals(product1, foundProduct1);
+            Assertions.assertThat(foundProduct1).isEqualTo(product1);
 
-            assertNotNull(foundProduct2); // 오류발생
-            assertEquals(product2, foundProduct2);
+            assertNotNull(foundProduct2);
+            Assertions.assertThat(foundProduct2).isEqualTo(product2);
         }
 
-        @Test
+    @Test
+    void getProductByName_ExistingProduct() { //이미 추가된 상품 name으로 해당 상품을 조회
+        // Given
+        Product product1 = new Product(1L, 2L, "product A", 59000L, "상품은 ~이렇습니다", "http");
+        Product product2 = new Product(3L, 4L, "product B", 88000L, "상품은 ~이렇습니다", "http");
+
+        memoryProductRepository.addProduct(product1);
+        memoryProductRepository.addProduct(product2);
+
+        // When
+        Product foundProduct1 = memoryProductRepository.getProductByName("product A");
+        Product foundProduct2 = memoryProductRepository.getProductByName("product B");
+
+        // Then
+        assertNotNull(foundProduct1);
+        Assertions.assertThat(foundProduct1).isEqualTo(product1);
+
+        assertNotNull(foundProduct2);
+        Assertions.assertThat(foundProduct2).isEqualTo(product2);
+    }
+
+    @Test
+    void getProductByName_NonExistingProduct() { //존재하지 않는 상품 이름으로 조회
+        // Given
+        Product product1 = new Product(1L, 2L, "product A", 59000L, "상품은 ~이렇습니다", "http");
+        Product product2 = new Product(3L, 4L, "product B", 88000L, "상품은 ~이렇습니다", "http");
+
+        memoryProductRepository.addProduct(product1);
+        memoryProductRepository.addProduct(product2);
+
+        // When
+        Product foundProduct = memoryProductRepository.getProductByName("Non-existing Product");
+
+        // Then
+        assertNull(foundProduct);
+    }
+
+
+    @Test
         void updateProduct() {
             Product product = new Product(1L, 2L,"product A",59000L,"상품은 ~이렇습니다","http");
             memoryProductRepository.addProduct(product);
@@ -99,5 +140,6 @@ class MemoryProductRepositoryTest {
             assertFalse(products.contains(product3));
             assertTrue(products.contains(product2));
         }
+
 }
 

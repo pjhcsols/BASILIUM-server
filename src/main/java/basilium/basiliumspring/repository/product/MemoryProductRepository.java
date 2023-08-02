@@ -3,7 +3,7 @@ package basilium.basiliumspring.repository.product;
 import basilium.basiliumspring.domain.category.Category;
 import basilium.basiliumspring.domain.product.Product;
 import basilium.basiliumspring.repository.category.CategoryRepository;
-import basilium.basiliumspring.repository.category.MemoryCategoryRepository;
+//import basilium.basiliumspring.repository.category.MemoryCategoryRepository;
 
 import java.util.*;
 
@@ -14,7 +14,22 @@ public class MemoryProductRepository implements ProductRepository {
     public MemoryProductRepository() {
         this.products = new HashMap<>();
     }
-
+    // 새로운 상품 ID를 위해 다음 사용 가능한 ID+1를 생성하는 유틸리티 메서드 추가
+    private Long generateNextProductId() {
+        if (products.isEmpty()) {
+            return 1L; // 첫 번째 상품 ID는 1로 시작합니다.
+        } else {
+            long maxId = products.keySet().stream().mapToLong(Long::longValue).max().getAsLong();
+            return maxId + 1;
+        }
+    }
+    // 새로운 상품 추가 시, 새로운 ID를 생성하여 상품에 할당
+    @Override
+    public void addProduct(Product product) {
+        long newProductId = generateNextProductId();
+        product.setProductId(newProductId); // 새로운 ID 할당
+        products.put(newProductId, product);
+    }
 
     @Override
     public List<Product> getAllProducts() {
@@ -24,6 +39,16 @@ public class MemoryProductRepository implements ProductRepository {
     @Override
     public Product getProductById(Long productId) {
         return products.get(productId);
+    }
+
+    @Override
+    public Product getProductByName(String productName) {
+        for (Product product : products.values()) {
+            if (product.getProductName().equals(productName)) {
+                return product;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -51,31 +76,6 @@ public class MemoryProductRepository implements ProductRepository {
             }
         }
 
-    }
-
-
-    //밑에 3개 테스트케이스 및 다시 짜기********
-    // 새로운 상품 ID를 위해 다음 사용 가능한 ID+1를 생성하는 유틸리티 메서드 추가
-    private Long generateNextProductId() {
-        if (products.isEmpty()) {
-            return 1L; // 첫 번째 상품 ID는 1로 시작합니다.
-        } else {
-            long maxId = products.keySet().stream().mapToLong(Long::longValue).max().getAsLong();
-            return maxId + 1;
-        }
-    }
-    /*지우기
-    @Override
-    public void addProduct(Product product) {
-        products.put(product.getProductId(), product);
-    }
-    */
-    // 새로운 상품 추가 시, 새로운 ID를 생성하여 상품에 할당
-    @Override
-    public void addProduct(Product product) {
-        long newProductId = generateNextProductId();
-        product.setProductId(newProductId); // 새로운 ID 할당
-        products.put(newProductId, product);
     }
 
     // getProductCategory 메서드를 추가하여 categoryId와 연결된 Category를 반환하도록 합니다.
