@@ -9,9 +9,7 @@ public interface ProductRepository {
     List<Product> getAllProducts();
     Product getProductById(Long productId);
     void updateProduct(Product updatedProduct);
-    void deleteProduct(Long productId);
-
-    //product id 로 지우기
-    //product name 으로 지우기
+    void deleteProductById(Long productId);//product id 로 지우기
+    void deleteProductByName(String productName);//product name 으로 지우기
     //test code짜기
 }

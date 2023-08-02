@@ -2,16 +2,13 @@ package basilium.basiliumspring.repository.product;
 
 import basilium.basiliumspring.domain.product.Product;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-public class MemoryProduct implements ProductRepository {
+public class MemoryProductRepository implements ProductRepository {
 
     private Map<Long, Product> products;
 
-    public MemoryProduct() {
+    public MemoryProductRepository() {
         this.products = new HashMap<>();
     }
 
@@ -40,9 +37,25 @@ public class MemoryProduct implements ProductRepository {
     }
 
     @Override
-    public void deleteProduct(Long productId) {
+    public void deleteProductById(Long productId) {
         products.remove(productId);
     }
+
+    @Override
+    public void deleteProductByName(String productName) {
+        Iterator<Map.Entry<Long, Product>> iterator = products.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Long, Product> entry = iterator.next();
+            Product product = entry.getValue();
+            if (product.getProductName().equals(productName)) {
+                iterator.remove();
+            }
+        }
+
+    }
+
+
 }
+
 
 
