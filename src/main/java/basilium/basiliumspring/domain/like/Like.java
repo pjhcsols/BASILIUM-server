@@ -5,6 +5,12 @@ public class Like {
     private String userId;
     private Long productId;
 
+    public Like(Long id, String userId, Long productId) {
+        this.id = id;
+        this.userId = userId;
+        this.productId = productId;
+    }
+
     public Long getId() {
         return id;
     }
