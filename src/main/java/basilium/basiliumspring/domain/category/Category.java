@@ -1,14 +1,13 @@
 package basilium.basiliumspring.domain.category;
 
 public class Category {
-    private Long categoryId;
+    private Long categoryId; //productcategoryId와 연결해야됨
     private String categoryName;
 
     public Category(Long categoryId, String categoryName) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
     }
-
 
     public Long getCategoryId() {
         return categoryId;
