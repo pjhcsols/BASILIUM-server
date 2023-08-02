@@ -10,6 +10,8 @@ public interface NormalUserRepository {
     void delete(NormalUser normalUser);
     void deleteById(String id);
     void deleteAll();
+    void modify(NormalUser normalUser);
+
     NormalUser save(NormalUser normalUser);
     Optional<NormalUser> findById(String id);
     Optional<NormalUser> findByEmail(String emailAddress);

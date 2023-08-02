@@ -168,4 +168,21 @@ class MemoryNormalUserRepositoryTest {
         Assertions.assertThat(result.size()).isEqualTo(2);
 
     }
+
+    @Test
+    void modify() {
+        //given
+        NormalUser normalUser1 = new NormalUser("mxcvber", "aas3", "kimver@gmail.com", "01090", Grade.BRONZE, "kingJun", 23L, "Deagu");
+        NormalUser normalUser2 = new NormalUser("xcvber", "aas3", "kimver@gmail.com", "01090", Grade.BRONZE, "kingJun", 23L, "Deagu");
+
+        repository.save(normalUser1);
+        repository.save(normalUser2);
+        //when
+        normalUser1.setPassword("asdf");
+        repository.modify(normalUser1);
+
+        //then
+        NormalUser result = repository.findById(normalUser1.getId()).get();
+        Assertions.assertThat(result.getPassword()).isEqualTo("asdf");
+    }
 }

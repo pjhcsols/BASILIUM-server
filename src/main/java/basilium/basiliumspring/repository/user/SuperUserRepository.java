@@ -11,6 +11,8 @@ public interface SuperUserRepository {
     void delete(SuperUser normalUser);
     void deleteById(String id);
     void deleteAll();
+    void modify(SuperUser superUser);
+
     SuperUser save(SuperUser superUser);
     Optional<SuperUser> findById(String id);
     Optional<SuperUser> findByEmail(String emailAddress);

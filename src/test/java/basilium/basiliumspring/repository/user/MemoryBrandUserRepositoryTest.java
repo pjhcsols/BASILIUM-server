@@ -167,4 +167,20 @@ class MemoryBrandUserRepositoryTest {
         //then
         Assertions.assertThat(result.size()).isEqualTo(2);
     }
+
+    @Test
+    void modify() {
+        //given
+        BrandUser brandUser1 = new BrandUser("moover", "aassdd123", "kiokalover@gmail.com", "01088162470", Grade.BRONZE, "kem aeungJun", "daegu", "Deagu", "www.basilium.com");
+        BrandUser brandUser2 = new BrandUser("olover", "aassdd123", "kiokalover@gmail.com", "01088162470", Grade.BRONZE, "kem aeungJun", "daegu", "Deagu", "www.basilium.com");
+        //when
+        repository.save(brandUser1);
+        repository.save(brandUser2);
+        brandUser1.setPassword("asdf");
+        repository.modify(brandUser1);
+        //then
+        BrandUser result = repository.findById(brandUser1.getId()).get();
+        Assertions.assertThat(result.getPassword()).isEqualTo(brandUser1.getPassword());
+
+    }
 }

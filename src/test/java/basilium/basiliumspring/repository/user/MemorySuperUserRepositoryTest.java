@@ -154,4 +154,21 @@ class MemorySuperUserRepositoryTest {
         //then
         Assertions.assertThat(result.size()).isEqualTo(2);
     }
+
+    @Test
+    void modify() {
+        //given
+        SuperUser superUser1 =  new SuperUser("mxcvber", "aas3", "kimver@gmail.com", "01090", Grade.DIAMOND);
+        SuperUser superUser2 =  new SuperUser("xcvber", "aas3", "kimver@gmail.com", "01090", Grade.DIAMOND);
+
+        repository.save(superUser1);
+        repository.save(superUser2);
+        //when
+        superUser1.setPassword("asdf");
+        repository.modify(superUser1);
+
+        //then
+        SuperUser result = repository.findById(superUser1.getId()).get();
+        Assertions.assertThat(result.getPassword()).isEqualTo("asdf");
+    }
 }

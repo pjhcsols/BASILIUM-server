@@ -28,6 +28,12 @@ public class MemoryBrandUserRepository implements BrandUserRepository{
     }
 
     @Override
+    public void modify(BrandUser brandUser) {
+        deleteById(brandUser.getId());
+        save(brandUser);
+    }
+
+    @Override
     public BrandUser save(BrandUser brandUser) {
         store.put(brandUser.getId(), brandUser);
         return brandUser;

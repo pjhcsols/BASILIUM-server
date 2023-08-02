@@ -29,6 +29,12 @@ public class MemoryNormalUserRepository implements NormalUserRepository{
     }
 
     @Override
+    public void modify(NormalUser normalUser) {
+        deleteById(normalUser.getId());
+        save(normalUser);
+    }
+
+    @Override
     public NormalUser save(NormalUser normalUser) {
         store.put(normalUser.getId(), normalUser);
         return normalUser;

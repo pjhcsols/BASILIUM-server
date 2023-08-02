@@ -29,6 +29,12 @@ public class MemorySuperUserRepository implements SuperUserRepository{
     }
 
     @Override
+    public void modify(SuperUser superUser) {
+        deleteById(superUser.getId());
+        save(superUser);
+    }
+
+    @Override
     public SuperUser save(SuperUser superUser) {
         store.put(superUser.getId(), superUser);
         return superUser;

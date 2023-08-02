@@ -10,6 +10,8 @@ public interface BrandUserRepository {
     void delete(BrandUser brandUser);
     void deleteById(String id);
     void deleteAll();
+    void modify(BrandUser brandUser);
+
     BrandUser save(BrandUser brandUser);
     Optional<BrandUser> findById(String id);
     Optional<BrandUser> findByEmail(String emailAddress);
