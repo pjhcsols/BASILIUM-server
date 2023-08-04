@@ -6,6 +6,13 @@ public class ReviewComment {
     String reviewComment;
     String commentDate;
 
+    public ReviewComment(Long commentId, Long reviewId, String reviewComment, String commentDate){
+        this.commentId = commentId;
+        this.reviewId = reviewId;
+        this.reviewComment = reviewComment;
+        this.commentDate = commentDate;
+    }
+
     public Long getCommentId() {
         return commentId;
     }
@@ -37,15 +44,4 @@ public class ReviewComment {
     public void setCommentDate(String commentDate) {
         this.commentDate = commentDate;
     }
-
-    public ReviewComment(Long commentId, Long reviewId, String reviewComment, String commentDate){
-        this.commentId = commentId;
-        this.reviewId = reviewId;
-        this.reviewComment = reviewComment;
-        this.commentDate = commentDate;
-    }
-
-
-
-
 }
