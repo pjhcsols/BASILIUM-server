@@ -27,7 +27,7 @@ public class MemoryPurchaseTransactionRepository implements PurchaseTransactionR
 
     @Override
     public Optional<PurchaseTransaction> findByTransactionId(Long id) {
-        return Optional.of(store.get(id));
+        return Optional.ofNullable((store.get(id)));
     }
 
     @Override
