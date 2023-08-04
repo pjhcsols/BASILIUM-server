@@ -7,7 +7,6 @@ public class Review {
     private String review;
     private String reviewDate;
 
-
     public Review(Long reviewId, Long userId, Long productId, String review, String reviewDate) {
         this.reviewId = reviewId;
         this.userId = userId;
