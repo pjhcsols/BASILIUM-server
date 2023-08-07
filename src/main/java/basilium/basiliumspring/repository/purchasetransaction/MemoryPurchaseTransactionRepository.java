@@ -17,12 +17,12 @@ public class MemoryPurchaseTransactionRepository implements PurchaseTransactionR
 
     @Override
     public List<PurchaseTransaction> findByUserId(String userId) {
-        return store.values().stream().filter(m->m.getUserId() == userId).collect(Collectors.toList());
+        return store.values().stream().filter(m->m.getUserId().equals(userId)).collect(Collectors.toList());
     }
 
     @Override
     public List<PurchaseTransaction> findByDate(String date) {
-        return store.values().stream().filter(m->m.getPurchaseTime()==date).collect(Collectors.toList());
+        return store.values().stream().filter(m->m.getPurchaseTime().equals(date)).collect(Collectors.toList());
     }
 
     @Override
@@ -37,10 +37,10 @@ public class MemoryPurchaseTransactionRepository implements PurchaseTransactionR
 
     @Override
     public void deleteByUserId(String userId) {
-        List<PurchaseTransaction> temp = store.values().stream().filter(m->m.getUserId() == userId).collect(Collectors.toList());
+        List<PurchaseTransaction> temp = store.values().stream().filter(m->m.getUserId().equals(userId)).collect(Collectors.toList());
         for(PurchaseTransaction item : temp)
         {
-            if(item.getUserId() == userId)
+            if(item.getUserId().equals(userId))
             {
               store.remove(item.getTransactionId());
             }

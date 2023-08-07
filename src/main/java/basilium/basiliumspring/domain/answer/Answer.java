@@ -1,26 +1,26 @@
-package basilium.basiliumspring.domain.question;
+package basilium.basiliumspring.domain.answer;
 
-public class Question {
-    private Long questionId;
+public class Answer {
+    private Long answerId;
     private String userId;
     private Long productId;
-    private String question;
+    private String answer;
     private String uploadDate;
 
-    public Question(Long questionId, String userId, Long productId, String question, String uploadDate){
-        this.questionId = questionId;
+    public Answer(Long answerId, String userId, Long productId, String answer, String uploadDate) {
+        this.answerId = answerId;
         this.userId = userId;
         this.productId = productId;
-        this.question = question;
+        this.answer = answer;
         this.uploadDate = uploadDate;
     }
 
-    public Long getQuestionId() {
-        return questionId;
+    public Long getAnswerId() {
+        return answerId;
     }
 
-    public void setQuestionId(Long questionId) {
-        this.questionId = questionId;
+    public void setAnswerId(Long answerId) {
+        this.answerId = answerId;
     }
 
     public String getUserId() {
@@ -39,12 +39,12 @@ public class Question {
         this.productId = productId;
     }
 
-    public String getQuestion() {
-        return question;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     public String getUploadDate() {
@@ -54,5 +54,4 @@ public class Question {
     public void setUploadDate(String uploadDate) {
         this.uploadDate = uploadDate;
     }
-
 }

@@ -39,7 +39,7 @@ public class MemoryShoppingCartRepository implements ShoppingCartRepository{
 
     @Override
     public void deleteAllShoppingRecordByUserId(String userId) {
-        List<ShoppingCart> temp = store.values().stream().filter(m->m.getUserId() == userId).collect(Collectors.toList());
+        List<ShoppingCart> temp = store.values().stream().filter(m->m.getUserId().equals(userId)).collect(Collectors.toList());
         for(ShoppingCart item : temp)
             store.remove(item.getOrderId());
     }
