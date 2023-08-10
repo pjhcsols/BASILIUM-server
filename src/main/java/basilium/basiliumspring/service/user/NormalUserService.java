@@ -2,20 +2,30 @@ package basilium.basiliumspring.service.user;
 
 import basilium.basiliumspring.domain.user.NormalUser;
 import basilium.basiliumspring.repository.user.NormalUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class NormalUserService {
     private final NormalUserRepository normalUserRepository;
 
+    @Autowired
     public NormalUserService(NormalUserRepository normalUserRepository) {
         this.normalUserRepository = normalUserRepository;
     }
 
-    public NormalUser join(NormalUser normalUser){
-        validateDuplicateMember(normalUser);
-        checkPasswordLength(normalUser);
-        checkStrongPassword(normalUser);
+    public boolean join(NormalUser normalUser){
+        try{
+            validateDuplicateMember(normalUser);
+            checkPasswordLength(normalUser);
+            checkStrongPassword(normalUser);
+        }
+        catch (IllegalStateException e){
+            System.out.println(e);
+            return false;
+        }
         normalUserRepository.save(normalUser);
-        return normalUser;
+        return true;
     }
 
     private void validateDuplicateMember(NormalUser normalUser) {

@@ -4,21 +4,32 @@ import basilium.basiliumspring.domain.user.NormalUser;
 import basilium.basiliumspring.domain.user.SuperUser;
 import basilium.basiliumspring.repository.user.NormalUserRepository;
 import basilium.basiliumspring.repository.user.SuperUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SuperUserService {
 
     private final SuperUserRepository superUserRepository;
 
+    @Autowired
     public SuperUserService(SuperUserRepository superUserRepository) {
         this.superUserRepository = superUserRepository;
     }
 
-    public SuperUser join(SuperUser superUser){
-        validateDuplicateMember(superUser);
-        checkPasswordLength(superUser);
-        checkStrongPassword(superUser);
+    public Boolean join(SuperUser superUser){
+        try{
+            validateDuplicateMember(superUser);
+            checkPasswordLength(superUser);
+            checkStrongPassword(superUser);
+
+        }
+        catch (IllegalStateException e){
+            System.out.println(e);
+            return false;
+        }
         superUserRepository.save(superUser);
-        return superUser;
+        return true;
     }
 
     private void validateDuplicateMember(SuperUser superUser) {

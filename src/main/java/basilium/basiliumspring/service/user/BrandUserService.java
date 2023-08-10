@@ -4,20 +4,31 @@ import basilium.basiliumspring.domain.user.BrandUser;
 import basilium.basiliumspring.domain.user.NormalUser;
 import basilium.basiliumspring.repository.user.BrandUserRepository;
 import basilium.basiliumspring.repository.user.NormalUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BrandUserService {
     private final BrandUserRepository brandUserRepository;
 
+    @Autowired
     public BrandUserService(BrandUserRepository brandUserRepository) {
         this.brandUserRepository = brandUserRepository;
     }
 
-    public BrandUser join(BrandUser brandUser){
-        validateDuplicateMember(brandUser);
-        checkPasswordLength(brandUser);
-        checkStrongPassword(brandUser);
+    public boolean join(BrandUser brandUser){
+        try{
+            validateDuplicateMember(brandUser);
+            checkPasswordLength(brandUser);
+            checkStrongPassword(brandUser);
+
+        }
+        catch (IllegalStateException e){
+            System.out.println(e);
+            return false;
+        }
         brandUserRepository.save(brandUser);
-        return brandUser;
+        return true;
     }
 
     private void validateDuplicateMember(BrandUser brandUser) {

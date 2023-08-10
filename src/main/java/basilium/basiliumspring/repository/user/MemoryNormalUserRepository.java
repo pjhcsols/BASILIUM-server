@@ -1,9 +1,11 @@
 package basilium.basiliumspring.repository.user;
 
 import basilium.basiliumspring.domain.user.NormalUser;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Repository
 public class MemoryNormalUserRepository implements NormalUserRepository{
 
     private static Map<String, NormalUser> store = new HashMap<>();

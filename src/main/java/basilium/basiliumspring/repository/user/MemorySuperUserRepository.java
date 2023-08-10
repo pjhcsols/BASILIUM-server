@@ -1,9 +1,11 @@
 package basilium.basiliumspring.repository.user;
 
 import basilium.basiliumspring.domain.user.SuperUser;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Repository
 public class MemorySuperUserRepository implements SuperUserRepository{
 
     private static Map<String, SuperUser> store = new HashMap<>();
