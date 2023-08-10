@@ -1,34 +1,36 @@
 package basilium.basiliumspring.service.user;
 
+import basilium.basiliumspring.domain.user.BrandUser;
 import basilium.basiliumspring.domain.user.NormalUser;
+import basilium.basiliumspring.repository.user.BrandUserRepository;
 import basilium.basiliumspring.repository.user.NormalUserRepository;
 
-public class NormalUserService {
-    private final NormalUserRepository normalUserRepository;
+public class BrandUserService {
+    private final BrandUserRepository brandUserRepository;
 
-    public NormalUserService(NormalUserRepository normalUserRepository) {
-        this.normalUserRepository = normalUserRepository;
+    public BrandUserService(BrandUserRepository brandUserRepository) {
+        this.brandUserRepository = brandUserRepository;
     }
 
-    public NormalUser join(NormalUser normalUser){
-        validateDuplicateMember(normalUser);
-        checkPasswordLength(normalUser);
-        checkStrongPassword(normalUser);
-        normalUserRepository.save(normalUser);
-        return normalUser;
+    public BrandUser join(BrandUser brandUser){
+        validateDuplicateMember(brandUser);
+        checkPasswordLength(brandUser);
+        checkStrongPassword(brandUser);
+        brandUserRepository.save(brandUser);
+        return brandUser;
     }
 
-    private void validateDuplicateMember(NormalUser normalUser) {
-        normalUserRepository.findById(normalUser.getId()).ifPresent(m->{
+    private void validateDuplicateMember(BrandUser brandUser) {
+        brandUserRepository.findById(brandUser.getId()).ifPresent(m->{
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         });
     }
-    private void checkPasswordLength(NormalUser normalUser) {
-        if (normalUser.getPassword().length() >= 8 && normalUser.getPassword().length() <= 16) return;
+    private void checkPasswordLength(BrandUser brandUser) {
+        if (brandUser.getPassword().length() >= 8 && brandUser.getPassword().length() <= 16) return;
         else throw new IllegalStateException("비밀번호는 8 ~ 16자 사이여야 합니다.");
     }
-    private void checkStrongPassword(NormalUser normalUser){
-        String password = normalUser.getPassword();
+    private void checkStrongPassword(BrandUser brandUser){
+        String password = brandUser.getPassword();
         boolean hasUpperCase = false;
         boolean hasLowerCase = false;
         boolean hasSpecialChar = false;
@@ -43,7 +45,4 @@ public class NormalUserService {
 
         if (!(hasUpperCase && hasLowerCase && hasSpecialChar))throw new IllegalStateException("비밀번호는 영문 소문자, 대문자, 특수문자를 포함해야됩니다.");
     }
-
-
-
 }
