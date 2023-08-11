@@ -24,6 +24,6 @@ public class SuperUserController {
     @PostMapping(value = "/v1/superuser/signup")
     public ResponseEntity<String> createNormalUser(@RequestBody SuperUser superUser) {
         JoinStatus result = superUserService.join(superUser);
-        return new ResponseEntity<>("회원가입 성공", result.getStatus());
+        return new ResponseEntity<>(result.getMessage(), result.getStatus());
     }
 }
