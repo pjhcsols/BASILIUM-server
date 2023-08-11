@@ -1,6 +1,7 @@
 package basilium.basiliumspring.service.user;
 
 import basilium.basiliumspring.domain.user.Grade;
+import basilium.basiliumspring.domain.user.JoinStatus;
 import basilium.basiliumspring.domain.user.NormalUser;
 import basilium.basiliumspring.repository.user.MemoryNormalUserRepository;
 import basilium.basiliumspring.repository.user.NormalUserRepository;
@@ -31,9 +32,9 @@ class NormalUserServiceTest {
         //given
         NormalUser normalUser = new NormalUser("aassdd123", "1234", "aassdd123@gmail.com", "01099999999", Grade.BRONZE, "taemin", 24L, "donggu");
         //when
-        boolean ret = normalUserService.join(normalUser);
+        JoinStatus ret = normalUserService.join(normalUser);
         //then
-        Assertions.assertThat(ret).isEqualTo(false);
+        Assertions.assertThat(ret).isEqualTo(JoinStatus.INVALID_PASSWORD_LENGTH);
         Assertions.assertThat(normalUserRepository.findById("aassdd123").isEmpty()).isEqualTo(true);
 
         //given
@@ -41,23 +42,23 @@ class NormalUserServiceTest {
         NormalUser normalUser2 = new NormalUser("aassdd123", "Aassdd1234!", "aassdd123@gmail.com", "01099999999", Grade.BRONZE, "taemin", 24L, "donggu");
 
         //when
-        boolean ret1 = normalUserService.join(normalUser1);
-        boolean ret2 = normalUserService.join(normalUser2);
+        JoinStatus ret1 = normalUserService.join(normalUser1);
+        JoinStatus ret2 = normalUserService.join(normalUser2);
 
         //then
         Assertions.assertThat(normalUserRepository.findById(normalUser1.getId()).get()).isEqualTo(normalUser1);
-        Assertions.assertThat(ret2).isEqualTo(false);
+        Assertions.assertThat(ret2).isEqualTo(JoinStatus.DUPLICATE);
 
         //given
         NormalUser normalUser3 = new NormalUser("aassdd124", "Aassdd1234!", "aassdd123@gmail.com", "01099999999", Grade.BRONZE, "taemin", 24L, "donggu");
         NormalUser normalUser4 = new NormalUser("aassdd125", "Aassdd1234", "aassdd123@gmail.com", "01099999999", Grade.BRONZE, "taemin", 24L, "donggu");
 
         //when
-        boolean ret3 = normalUserService.join(normalUser3);
-        boolean ret4 = normalUserService.join(normalUser4);
+        JoinStatus ret3 = normalUserService.join(normalUser3);
+        JoinStatus ret4 = normalUserService.join(normalUser4);
 
         //then
         Assertions.assertThat(normalUserRepository.findById(normalUser3.getId()).get()).isEqualTo(normalUser3);
-        Assertions.assertThat(ret4).isEqualTo(false);
+        Assertions.assertThat(ret4).isEqualTo(JoinStatus.INVALID_PASSWORD_STRENGTH);
     }
 }

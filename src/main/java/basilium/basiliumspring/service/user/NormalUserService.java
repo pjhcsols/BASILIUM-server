@@ -1,5 +1,6 @@
 package basilium.basiliumspring.service.user;
 
+import basilium.basiliumspring.domain.user.JoinStatus;
 import basilium.basiliumspring.domain.user.NormalUser;
 import basilium.basiliumspring.repository.user.NormalUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +15,31 @@ public class NormalUserService {
         this.normalUserRepository = normalUserRepository;
     }
 
-    public boolean join(NormalUser normalUser){
+    public JoinStatus join(NormalUser normalUser){
         try{
             validateDuplicateMember(normalUser);
-            checkPasswordLength(normalUser);
-            checkStrongPassword(normalUser);
         }
         catch (IllegalStateException e){
             System.out.println(e);
-            return false;
+            return JoinStatus.DUPLICATE;
+        }
+        try{
+            checkPasswordLength(normalUser);
+        }
+        catch (IllegalStateException e){
+            System.out.println(e);
+            return JoinStatus.INVALID_PASSWORD_LENGTH;
+        }
+        try{
+            checkStrongPassword(normalUser);
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+            return JoinStatus.INVALID_PASSWORD_STRENGTH;
         }
         normalUserRepository.save(normalUser);
-        return true;
+        return JoinStatus.SUCCESS;
     }
 
     private void validateDuplicateMember(NormalUser normalUser) {
@@ -50,10 +64,6 @@ public class NormalUserService {
             else if ("!@#$%^&*()-_=+[]{}|;:'\",.<>/?".indexOf(c) != -1)
                 hasSpecialChar = true;
         }
-
         if (!(hasUpperCase && hasLowerCase && hasSpecialChar))throw new IllegalStateException("비밀번호는 영문 소문자, 대문자, 특수문자를 포함해야됩니다.");
     }
-
-
-
 }

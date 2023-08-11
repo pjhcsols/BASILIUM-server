@@ -1,5 +1,6 @@
 package basilium.basiliumspring.service.user;
 
+import basilium.basiliumspring.domain.user.JoinStatus;
 import basilium.basiliumspring.domain.user.NormalUser;
 import basilium.basiliumspring.domain.user.SuperUser;
 import basilium.basiliumspring.repository.user.NormalUserRepository;
@@ -17,19 +18,31 @@ public class SuperUserService {
         this.superUserRepository = superUserRepository;
     }
 
-    public Boolean join(SuperUser superUser){
+    public JoinStatus join(SuperUser superUser){
         try{
             validateDuplicateMember(superUser);
-            checkPasswordLength(superUser);
-            checkStrongPassword(superUser);
-
         }
         catch (IllegalStateException e){
             System.out.println(e);
-            return false;
+            return JoinStatus.DUPLICATE;
+        }
+        try{
+            checkPasswordLength(superUser);
+        }
+        catch (IllegalStateException e){
+            System.out.println(e);
+            return JoinStatus.INVALID_PASSWORD_LENGTH;
+        }
+        try{
+            checkStrongPassword(superUser);
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+            return JoinStatus.INVALID_PASSWORD_STRENGTH;
         }
         superUserRepository.save(superUser);
-        return true;
+        return JoinStatus.SUCCESS;
     }
 
     private void validateDuplicateMember(SuperUser superUser) {

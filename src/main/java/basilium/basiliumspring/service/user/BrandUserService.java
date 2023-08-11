@@ -1,6 +1,7 @@
 package basilium.basiliumspring.service.user;
 
 import basilium.basiliumspring.domain.user.BrandUser;
+import basilium.basiliumspring.domain.user.JoinStatus;
 import basilium.basiliumspring.domain.user.NormalUser;
 import basilium.basiliumspring.repository.user.BrandUserRepository;
 import basilium.basiliumspring.repository.user.NormalUserRepository;
@@ -16,19 +17,31 @@ public class BrandUserService {
         this.brandUserRepository = brandUserRepository;
     }
 
-    public boolean join(BrandUser brandUser){
+    public JoinStatus join(BrandUser brandUser){
         try{
             validateDuplicateMember(brandUser);
-            checkPasswordLength(brandUser);
-            checkStrongPassword(brandUser);
-
         }
         catch (IllegalStateException e){
             System.out.println(e);
-            return false;
+            return JoinStatus.DUPLICATE;
+        }
+        try{
+            checkPasswordLength(brandUser);
+        }
+        catch (IllegalStateException e){
+            System.out.println(e);
+            return JoinStatus.INVALID_PASSWORD_LENGTH;
+        }
+        try{
+            checkStrongPassword(brandUser);
+        }
+        catch (IllegalStateException e)
+        {
+            System.out.println(e);
+            return JoinStatus.INVALID_PASSWORD_STRENGTH;
         }
         brandUserRepository.save(brandUser);
-        return true;
+        return JoinStatus.SUCCESS;
     }
 
     private void validateDuplicateMember(BrandUser brandUser) {

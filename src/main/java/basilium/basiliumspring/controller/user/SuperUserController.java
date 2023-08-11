@@ -1,6 +1,7 @@
 package basilium.basiliumspring.controller.user;
 
 import basilium.basiliumspring.domain.user.BrandUser;
+import basilium.basiliumspring.domain.user.JoinStatus;
 import basilium.basiliumspring.domain.user.SuperUser;
 import basilium.basiliumspring.service.user.BrandUserService;
 import basilium.basiliumspring.service.user.SuperUserService;
@@ -21,13 +22,8 @@ public class SuperUserController {
     }
 
     @PostMapping(value = "/v1/superuser/signup")
-    public ResponseEntity<String> createNormalUser(@RequestBody SuperUser superUser){
-        Boolean result = superUserService.join(superUser);
-        if (result){
-            return new ResponseEntity<>("회원가입 성공", HttpStatus.CREATED);
-        }
-        else{
-            return new ResponseEntity<>("회원가입 실패", HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<String> createNormalUser(@RequestBody SuperUser superUser) {
+        JoinStatus result = superUserService.join(superUser);
+        return new ResponseEntity<>("회원가입 성공", result.getStatus());
     }
 }

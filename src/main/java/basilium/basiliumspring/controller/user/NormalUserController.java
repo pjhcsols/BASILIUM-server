@@ -1,5 +1,6 @@
 package basilium.basiliumspring.controller.user;
 
+import basilium.basiliumspring.domain.user.JoinStatus;
 import basilium.basiliumspring.domain.user.NormalUser;
 import basilium.basiliumspring.service.user.NormalUserService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,14 +22,8 @@ public class NormalUserController {
     }
 
     @PostMapping(value = "/v1/normalUser/signup")
-    public ResponseEntity<String> createNormalUser(@RequestBody NormalUser normalUser){
-        Boolean result = normalUserService.join(normalUser);
-        if (result){
-            return new ResponseEntity<>("회원가입 성공", HttpStatus.CREATED);
-        }
-        else{
-            return new ResponseEntity<>("회원가입 실패", HttpStatus.BAD_REQUEST);
-        }
-
+    public ResponseEntity<String> createNormalUser(@RequestBody NormalUser normalUser) {
+        JoinStatus result = normalUserService.join(normalUser);
+        return new ResponseEntity<>(result.getMessage(), result.getStatus());
     }
 }
