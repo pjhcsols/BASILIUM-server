@@ -15,7 +15,7 @@ public interface NormalUserRepository {
     NormalUser save(NormalUser normalUser);
     Optional<NormalUser> findById(String id);
     Optional<NormalUser> findByEmail(String emailAddress);
-    Optional<NormalUser> findByName(String name);
+    List<NormalUser> findByName(String name);
     Optional<NormalUser> findByPhoneNumber(String phoneNumber);
     List<NormalUser> findAll();
 }

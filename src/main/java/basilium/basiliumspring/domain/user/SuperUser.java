@@ -1,7 +1,10 @@
 package basilium.basiliumspring.domain.user;
 
+import javax.persistence.Entity;
+
+@Entity
 public class SuperUser extends User{
-    public SuperUser(String id, String password, String emailAddress, String phoneNumber, Grade userGrade) {
-        super(id, password, emailAddress, phoneNumber, userGrade);
+    public SuperUser() {
+        super();
     }
 }

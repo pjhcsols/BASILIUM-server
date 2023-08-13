@@ -7,13 +7,14 @@ import basilium.basiliumspring.repository.user.NormalUserRepository;
 import basilium.basiliumspring.repository.user.SuperUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Transactional
 public class SuperUserService {
 
     private final SuperUserRepository superUserRepository;
 
-    @Autowired
+
     public SuperUserService(SuperUserRepository superUserRepository) {
         this.superUserRepository = superUserRepository;
     }

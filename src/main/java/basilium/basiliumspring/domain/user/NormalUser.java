@@ -1,15 +1,15 @@
 package basilium.basiliumspring.domain.user;
 
+import javax.persistence.Entity;
+
+@Entity
 public class NormalUser extends User{
     private String name;
     private Long age;
     private String address;
 
-    public NormalUser(String id, String password, String emailAddress, String phoneNumber, Grade userGrade, String name, Long age, String address) {
-        super(id, password, emailAddress, phoneNumber, userGrade);
-        this.name = name;
-        this.age = age;
-        this.address = address;
+    public NormalUser() {
+        super();
     }
 
     public String getName() {

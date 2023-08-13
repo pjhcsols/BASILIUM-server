@@ -4,6 +4,7 @@ import basilium.basiliumspring.domain.user.NormalUser;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class MemoryNormalUserRepository implements NormalUserRepository{
@@ -53,8 +54,8 @@ public class MemoryNormalUserRepository implements NormalUserRepository{
     }
 
     @Override
-    public Optional<NormalUser> findByName(String name) {
-        return store.values().stream().filter(normalUser->normalUser.getName().equals(name)).findAny();
+    public List<NormalUser> findByName(String name) {
+        return store.values().stream().filter(normalUser->normalUser.getName().equals(name)).collect(Collectors.toList());
     }
 
     @Override

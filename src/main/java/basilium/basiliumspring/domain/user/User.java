@@ -1,18 +1,20 @@
 package basilium.basiliumspring.domain.user;
 
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public class User {
+
+    @Id
     private String id;
     private String password;
     private String emailAddress;
     private String phoneNumber;
     private Grade userGrade;
 
-    public User(String id, String password, String emailAddress, String phoneNumber, Grade userGrade) {
-        this.id = id;
-        this.password = password;
-        this.emailAddress = emailAddress;
-        this.phoneNumber = phoneNumber;
-        this.userGrade = userGrade;
+    public User() {
+
     }
 
     public String getId() {

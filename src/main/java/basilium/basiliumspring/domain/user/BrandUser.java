@@ -1,5 +1,8 @@
 package basilium.basiliumspring.domain.user;
 
+import javax.persistence.Entity;
+
+@Entity
 public class BrandUser extends User{
 
     private String firmName;
@@ -7,12 +10,8 @@ public class BrandUser extends User{
     private String businessRegistration;
     private String firmWebUrl;
 
-    public BrandUser(String id, String password, String emailAddress, String phoneNumber, Grade userGrade, String firmName, String firmAddress, String businessRegistration, String firmWebUrl) {
-        super(id, password, emailAddress, phoneNumber, userGrade);
-        this.firmName = firmName;
-        this.firmAddress = firmAddress;
-        this.businessRegistration = businessRegistration;
-        this.firmWebUrl = firmWebUrl;
+    public BrandUser() {
+        super();
     }
 
     public String getFirmName() {
