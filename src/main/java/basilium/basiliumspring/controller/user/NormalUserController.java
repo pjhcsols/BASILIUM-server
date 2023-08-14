@@ -26,4 +26,5 @@ public class NormalUserController {
         JoinStatus result = normalUserService.join(normalUser);
         return new ResponseEntity<>(result.getMessage(), result.getStatus());
     }
+
 }
