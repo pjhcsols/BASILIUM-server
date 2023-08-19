@@ -3,7 +3,6 @@ package basilium.basiliumspring.repository.product;
 import basilium.basiliumspring.domain.category.Category;
 import basilium.basiliumspring.domain.product.Product;
 import basilium.basiliumspring.repository.category.CategoryRepository;
-//import basilium.basiliumspring.repository.category.MemoryCategoryRepository;
 
 import java.util.*;
 
