@@ -18,11 +18,20 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping
+    //post 요청 /products/add
+    @PostMapping("/add")
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
         productService.addProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body("Product added successfully");
     }
+    /*
+    @PostMapping("/{categoryId}")
+    public ResponseEntity<String> addProduct(@RequestBody Product product, @PathVariable Long categoryId) {
+        productService.addProductAndMapToCategory(product, categoryId);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Product added successfully");
+    }
+    */
+
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {

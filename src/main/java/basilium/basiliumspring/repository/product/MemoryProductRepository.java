@@ -10,7 +10,7 @@ import java.util.*;
 public class MemoryProductRepository implements ProductRepository {
 
     private Map<Long, Product> products;
-
+    private Map<Long, Long> productCategoryMap = new HashMap<>();
     public MemoryProductRepository() {
         this.products = new HashMap<>();
     }
@@ -77,28 +77,13 @@ public class MemoryProductRepository implements ProductRepository {
         }
 
     }
-
-    // getProductCategory 메서드를 추가하여 categoryId와 연결된 Category를 반환하도록 합니다.
-    // Product 객체에 productCategoryId가 있다고 가정하고 저장합니다.
-    // 또는 CategoryId를 따로 설정하거나 가져오는 로직을 여기에 구현합니다.
-    /*
+/*
+    //카테고리와 상품 id 매핑하는 곳 서비스에서 add시에 발동
     @Override
-    public Category getProductCategory(Product product) {
-        Long categoryId = product.getProductCategoryId(); // Product 객체의 productCategoryId를 가져옵니다.
-        // 이제 categoryId를 이용하여 해당 Category를 조회하여 반환하는 로직을 작성합니다.
-        // CategoryRepository를 사용하여 해당 categoryId를 이용해 Category를 조회하면 됩니다.
-        // (CategoryRepository는 여기서 추가로 구현되어 있다고 가정합니다.)
-
-        // 가정: CategoryRepository가 이미 구현되어 있다고 가정하고 호출하는 예시
-        CategoryRepository categoryRepository = new MemoryCategoryRepository(); // CategoryRepository의 구현 클래스
-        Category category = categoryRepository.getCategoryById(categoryId);
-
-        // 또는 다른 방식으로 CategoryRepository를 주입받아 사용할 수 있습니다.
-
-        return category;
+    public void mapProductToCategory(Long productId, Long categoryId) {
+        productCategoryMap.put(productId, categoryId);
     }
 */
-
 }
 
 

@@ -5,6 +5,7 @@ import basilium.basiliumspring.repository.product.ProductRepository;
 
 import java.util.List;
 
+//브랜드 유저가 add를 했을때 카테고리id와 product id 매핑
 public class ProductService {
 
     private ProductRepository productRepository;
@@ -14,9 +15,16 @@ public class ProductService {
     }
 
     public void addProduct(Product product) {
-        productRepository.addProduct(product);
+        productRepository.addProduct(product); // 상품 추가
     }
+/*
+    public void addProductAndMapToCategory(Product product, Long categoryId) {
+        // addProduct(product); // 상품 추가
 
+        // 상품 ID와 카테고리 ID를 매핑
+        productRepository.mapProductToCategory(product.getProductCategoryId(), categoryId);
+    }
+*/
     public List<Product> getAllProducts() {
         return productRepository.getAllProducts();
     }

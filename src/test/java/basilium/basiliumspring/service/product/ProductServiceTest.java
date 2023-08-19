@@ -7,18 +7,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.BDDMockito.given; // BDD  given 메서드를 사용하려면 해당 패키지를 임포트해야 합니다.
+
 
 class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
 
     private ProductService productService;
+    private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
@@ -37,6 +47,22 @@ class ProductServiceTest {
         // Then
         verify(productRepository, times(1)).addProduct(product); // 제품 추가가 올바르게 호출되었는지 검증
     }
+    /*
+    @Test
+    void addProductAndMapToCategory() {
+        // Given
+        Product product = new Product(1L, 2L, "product A", 59000L, "상품은 ~이렇습니다", "http");
+        Long categoryId = 2L;
+
+        // When
+        productService.addProductAndMapToCategory(product, categoryId);
+
+        // Then
+        verify(productRepository, times(1)).addProduct(product);
+        verify(productRepository, times(1)).mapProductToCategory(product.getProductCategoryId(), categoryId);
+    }
+    */
+
 
     @Test
     void getAllProducts() {
