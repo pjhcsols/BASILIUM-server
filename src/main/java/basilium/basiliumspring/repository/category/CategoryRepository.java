@@ -17,5 +17,8 @@ public interface CategoryRepository { //CRUD
 
     void deleteCategoryById(Long categoryId);// 카테고리 ID를 기반으로 카테고리를 삭제합니다.
     void deleteCategoryByName(String categoryName);// 카테고리 Name를 기반으로 카테고리를 삭제합니다.
+
+    // 새로운 메서드: 부모 카테고리 ID로 카테고리 조회
+    //List<Category> getCategoriesByParentId(Long parentCategoryId);
 }
 

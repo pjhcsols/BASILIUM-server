@@ -80,5 +80,19 @@ public class MemoryCategoryRepository implements CategoryRepository {
         // categoryName에 해당하는 카테고리를 삭제하는 코드 구현
         categories.removeIf(category -> category.getCategoryName().equalsIgnoreCase(categoryName));
     }
+    // 부모 카테고리 ID로 하위 카테고리를 조회하는 메서드
+    /*
+    @Override
+    public List<Category> getCategoriesByParentId(Long parentCategoryId) {
+        List<Category> subCategories = new ArrayList<>();
+        for (Category category : categories) {
+            if (parentCategoryId.equals(category.getParentCategoryId())) {
+                subCategories.add(category);
+            }
+        }
+        return subCategories;
+    }
+
+     */
 }
 

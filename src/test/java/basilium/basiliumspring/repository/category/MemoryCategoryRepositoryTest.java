@@ -85,4 +85,13 @@ class MemoryCategoryRepositoryTest {
         Category deletedCategory = categoryRepository.getCategoryByName(categoryName);
         assertNull(deletedCategory);
     }
+    /*
+    @Test
+    void getCategoriesByParentId() {
+        // 부모 카테고리 ID를 기반으로 하위 카테고리 조회 테스트
+        Long parentCategoryId = 1L;
+        List<Category> subCategories = categoryRepository.getCategoriesByParentId(parentCategoryId);
+        assertEquals(0, subCategories.size()); // 상위 카테고리 1L에는 하위 카테고리가 없으므로 예상 값은 0
+    }
+     */
 }
