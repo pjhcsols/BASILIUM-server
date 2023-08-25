@@ -1,6 +1,9 @@
-package basilium.basiliumspring;
+package basilium.basiliumspring.configuration;
 
+import basilium.basiliumspring.repository.product.JpaProductRepository;
+import basilium.basiliumspring.repository.product.ProductRepository;
 import basilium.basiliumspring.repository.user.*;
+import basilium.basiliumspring.service.product.ProductService;
 import basilium.basiliumspring.service.user.BrandUserService;
 import basilium.basiliumspring.service.user.NormalUserService;
 import basilium.basiliumspring.service.user.SuperUserService;
@@ -39,4 +42,10 @@ public class SpringConfig {
     public SuperUserRepository superUserRepository() {
         return new JpaSuperUserRepository(em);
     }
+
+    @Bean
+    public ProductService productService(){return new ProductService(productRepository());}
+    @Bean
+    public ProductRepository productRepository(){return new JpaProductRepository(em);}
+
 }

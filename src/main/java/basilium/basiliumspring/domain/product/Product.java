@@ -1,6 +1,18 @@
 package basilium.basiliumspring.domain.product;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
     private Long productCategoryId;
     private String productName;
@@ -8,15 +20,8 @@ public class Product {
     private String productDesc;
     private String productPhotoUrl;
 
+    public Product() {
 
-    public Product(Long productId, Long productCategoryId, String productName, Long productPrice,
-                   String productDesc, String productPhotoUrl) {
-        this.productId = productId;
-        this.productCategoryId = productCategoryId;
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.productDesc = productDesc;
-        this.productPhotoUrl = productPhotoUrl;
     }
 
     // Getter and Setter methods for each field

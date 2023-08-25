@@ -2,13 +2,15 @@ package basilium.basiliumspring.service.product;
 
 import basilium.basiliumspring.domain.product.Product;
 import basilium.basiliumspring.repository.product.ProductRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 //브랜드 유저가 add를 했을때 카테고리id와 product id 매핑
 public class ProductService {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -30,7 +32,7 @@ public class ProductService {
     }
 
     public Product getProductById(Long productId) {
-        return productRepository.getProductById(productId);
+        return productRepository.getProductById(productId).get();
     }
 
     public void updateProduct(Product updatedProduct) {

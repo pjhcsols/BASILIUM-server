@@ -2,6 +2,7 @@ package basilium.basiliumspring.controller.product;
 
 import basilium.basiliumspring.domain.product.Product;
 import basilium.basiliumspring.service.product.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +15,14 @@ public class ProductController {
 
     private ProductService productService;
 
+    @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
     //post 요청 /products/add
     @PostMapping("/add")
-    public ResponseEntity<String> addProduct(@RequestBody Product product) {
+    public ResponseEntity<String> registerProduct(@RequestBody Product product) {
         productService.addProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body("Product added successfully");
     }

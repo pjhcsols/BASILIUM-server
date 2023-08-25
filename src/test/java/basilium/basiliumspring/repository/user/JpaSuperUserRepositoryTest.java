@@ -20,7 +20,7 @@ class JpaSuperUserRepositoryTest {
 
     @Qualifier("superUserRepository")
     @Autowired
-    SuperUserRepository repository;
+    private SuperUserRepository repository;
 
     @BeforeEach
     public void beforeEach(){

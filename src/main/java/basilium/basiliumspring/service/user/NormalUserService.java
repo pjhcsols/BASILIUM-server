@@ -1,16 +1,23 @@
 package basilium.basiliumspring.service.user;
 
 import basilium.basiliumspring.domain.user.JoinStatus;
+import basilium.basiliumspring.domain.user.LoginStatus;
 import basilium.basiliumspring.domain.user.NormalUser;
 import basilium.basiliumspring.repository.user.NormalUserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import basilium.basiliumspring.util.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Transactional
+@Slf4j
 public class NormalUserService {
     private final NormalUserRepository normalUserRepository;
-
+    @Value("${jwt.secret}")
+    private String secretKey;
+    private Long expiredMs = 1000 * 60 * 60l;
 
     public NormalUserService(NormalUserRepository normalUserRepository) {
         this.normalUserRepository = normalUserRepository;
@@ -41,6 +48,18 @@ public class NormalUserService {
         }
         normalUserRepository.save(normalUser);
         return JoinStatus.SUCCESS;
+    }
+
+    public LoginStatus login(String userId, String userPassword){
+        Optional<NormalUser> tar = normalUserRepository.findById(userId);
+        if (tar.get()== null || !(tar.get().getPassword().equals(userPassword))){
+            return LoginStatus.FAIL;
+        }
+        return LoginStatus.SUCCESS;
+
+    }
+    public String afterSuccessLogin(String userId){
+        return JwtUtil.createJwt(userId, secretKey, expiredMs);
     }
 
     private void validateDuplicateMember(NormalUser normalUser) {

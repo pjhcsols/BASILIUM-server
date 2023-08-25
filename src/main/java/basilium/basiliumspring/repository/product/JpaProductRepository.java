@@ -1,62 +1,82 @@
 package basilium.basiliumspring.repository.product;
 
 import basilium.basiliumspring.domain.product.Product;
+import basilium.basiliumspring.domain.user.NormalUser;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 public class JpaProductRepository implements ProductRepository{
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    private EntityManager em;
+
+    public JpaProductRepository(EntityManager em) {
+        this.em = em;
+    }
 
     @Override
-    @Transactional
     public void addProduct(Product product) {
-        entityManager.persist(product);
+        em.persist(product);
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return entityManager.createQuery("SELECT p FROM Product p", Product.class)
+        return em.createQuery("select m from Product m", Product.class)
                 .getResultList();
     }
 
     @Override
-    public Product getProductById(Long productId) {
-        return entityManager.find(Product.class, productId);
+    public Optional<Product> getProductById(Long productId) {
+        Product result = em.find(Product.class, productId);
+        return Optional.ofNullable(result);
     }
 
     @Override
-    public Product getProductByName(String productName) {
-        return entityManager.createQuery("SELECT p FROM Product p WHERE p.productName = :name", Product.class)
+    public Optional<Product> getProductByName(String productName) {
+        Product result =  em.createQuery("SELECT p FROM Product p WHERE p.productName = :name", Product.class)
                 .setParameter("name", productName)
                 .getSingleResult();
+        return Optional.ofNullable(result);
     }
 
     @Override
-    @Transactional
     public void updateProduct(Product updatedProduct) {
-        entityManager.merge(updatedProduct);
+
+        Product existingProduct = em.find(Product.class, updatedProduct.getProductId());
+
+        if (existingProduct != null) {
+            existingProduct.setProductCategoryId(updatedProduct.getProductCategoryId());
+            existingProduct.setProductDesc(updatedProduct.getProductDesc());
+            existingProduct.setProductName(updatedProduct.getProductName());
+            existingProduct.setProductPrice(updatedProduct.getProductPrice());
+            existingProduct.setProductId(updatedProduct.getProductId());
+            existingProduct.setProductPhotoUrl(updatedProduct.getProductPhotoUrl());
+            em.merge(existingProduct); // 변경 내용 저장
+        }
     }
 
     @Override
-    @Transactional
     public void deleteProductById(Long productId) {
-        Product product = entityManager.find(Product.class, productId);
+        Product product = em.find(Product.class, productId);
         if (product != null) {
-            entityManager.remove(product);
+            em.remove(product);
         }
     }
 
     @Override
-    @Transactional
     public void deleteProductByName(String productName) {
-        Product product = getProductByName(productName);
+        Product product = getProductByName(productName).get();
         if (product != null) {
-            entityManager.remove(product);
+            em.remove(product);
         }
     }
+
+    @Override
+    public void deleteAll() {
+        em.createQuery("delete from Product").executeUpdate();
+    }
+
 }

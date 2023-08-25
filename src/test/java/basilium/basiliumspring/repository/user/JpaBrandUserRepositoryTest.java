@@ -25,7 +25,7 @@ class JpaBrandUserRepositoryTest {
 
     @Qualifier("brandUserRepository")
     @Autowired
-    BrandUserRepository repository;
+    private BrandUserRepository repository;
 
     @AfterEach
     public void afterEach(){
