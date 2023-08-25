@@ -59,7 +59,7 @@ public class NormalUserService {
 
     }
     public String afterSuccessLogin(String userId){
-        return JwtUtil.createJwt(userId, secretKey, expiredMs);
+        return JwtUtil.createJwt(userId, "normal", secretKey, expiredMs);
     }
 
     private void validateDuplicateMember(NormalUser normalUser) {

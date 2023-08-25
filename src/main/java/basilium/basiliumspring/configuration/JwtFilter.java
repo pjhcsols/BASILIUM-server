@@ -1,6 +1,8 @@
 package basilium.basiliumspring.configuration;
 
+import basilium.basiliumspring.service.user.BrandUserService;
 import basilium.basiliumspring.service.user.NormalUserService;
+import basilium.basiliumspring.service.user.SuperUserService;
 import basilium.basiliumspring.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,9 @@ import java.util.List;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final NormalUserService normalUserService;
+    private final BrandUserService brandUserService;
+    private final SuperUserService superUserService;
+
     @Value("${jwt.secret}")
     private final String secretKey;
 
@@ -53,12 +58,31 @@ public class JwtFilter extends OncePerRequestFilter {
 
         //UserName Token에서 꺼내기
         String userName = JwtUtil.getUserName(token, secretKey);
+        String userType = JwtUtil.getUserType(token, secretKey);
         log.info("userName:{}", userName);
+        log.info("userType:{}", userType);
         //권환 부여
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(userName, null, List.of(new SimpleGrantedAuthority("USER")));
-        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        filterChain.doFilter(request, response);
+        if (userType.equals("normal")) {
+            log.info("WTF");
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(userName, null, List.of(new SimpleGrantedAuthority("ROLE_NORMAL_USER")));
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            filterChain.doFilter(request, response);
+        }
+        else if(userType.equals("brand")){
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(userName, null, List.of(new SimpleGrantedAuthority("ROLE_BRAND_USER")));
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            filterChain.doFilter(request, response);
+        }
+        else{
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(userName, null, List.of(new SimpleGrantedAuthority("ROLE_SUPER_USER")));
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            filterChain.doFilter(request, response);
+        }
     }
 }

@@ -1,6 +1,8 @@
 package basilium.basiliumspring.configuration;
 
+import basilium.basiliumspring.service.user.BrandUserService;
 import basilium.basiliumspring.service.user.NormalUserService;
+import basilium.basiliumspring.service.user.SuperUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +24,9 @@ import javax.validation.Valid;
 public class SecurityConfig {
 
     private final NormalUserService normalUserService;
+    private final BrandUserService brandUserService;
+    private final SuperUserService superUserService;
+
     @Value("${jwt.secret}")
     private String secretKey;
 
@@ -33,14 +38,17 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeRequests()
                 .antMatchers("/v1/normalUser/signup", "/v1/normalUser/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/v1/**").authenticated()
+                .antMatchers("/v1/brandUser/signup", "/v1/brandUser/login").permitAll()
+                .antMatchers("/v1/superUser/signup", "/v1/superUser/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/v1/normalUser/**").hasRole("NORMAL_USER")
+                .antMatchers(HttpMethod.POST, "/v1/brandUser/**").hasRole("BRAND_USER")
+                .antMatchers(HttpMethod.POST, "/v1/superUser/**").hasRole("SUPER_USER")
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(new JwtFilter(normalUserService, secretKey), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtFilter(normalUserService, brandUserService, superUserService, secretKey), UsernamePasswordAuthenticationFilter.class)
                 .build();
-
     }
 
     @Bean
