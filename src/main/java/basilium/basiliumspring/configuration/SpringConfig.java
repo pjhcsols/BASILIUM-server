@@ -5,6 +5,7 @@ import basilium.basiliumspring.repository.product.ProductRepository;
 import basilium.basiliumspring.repository.user.*;
 import basilium.basiliumspring.service.product.ProductService;
 import basilium.basiliumspring.service.user.BrandUserService;
+import basilium.basiliumspring.service.user.KakaoService;
 import basilium.basiliumspring.service.user.NormalUserService;
 import basilium.basiliumspring.service.user.SuperUserService;
 import org.springframework.context.annotation.Bean;
@@ -47,5 +48,8 @@ public class SpringConfig {
     public ProductService productService(){return new ProductService(productRepository());}
     @Bean
     public ProductRepository productRepository(){return new JpaProductRepository(em);}
+
+    @Bean
+    public KakaoService kakaoService(){return new KakaoService();}
 
 }
