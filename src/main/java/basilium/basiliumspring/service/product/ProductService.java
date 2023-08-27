@@ -7,11 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Transactional
-//브랜드 유저가 add를 했을때 카테고리id와 product id 매핑
+
 public class ProductService {
-
     private final ProductRepository productRepository;
-
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
