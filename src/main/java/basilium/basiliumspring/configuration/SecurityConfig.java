@@ -40,6 +40,8 @@ public class SecurityConfig {
                 .antMatchers("/v1/normalUser/signup", "/v1/normalUser/login").permitAll()
                 .antMatchers("/v1/brandUser/signup", "/v1/brandUser/login").permitAll()
                 .antMatchers("/v1/superUser/signup", "/v1/superUser/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/**").permitAll()
                 //.antMatchers(HttpMethod.POST, "/v1/normalUser/**").hasRole("NORMAL_USER")
                 //.antMatchers(HttpMethod.POST, "/v1/brandUser/**").hasRole("BRAND_USER")
                 //.antMatchers(HttpMethod.POST, "/v1/superUser/**").hasRole("SUPER_USER")

@@ -1,8 +1,11 @@
 package basilium.basiliumspring.configuration;
 
+import basilium.basiliumspring.repository.image.ImageRepository;
+import basilium.basiliumspring.repository.image.JpaImageRepository;
 import basilium.basiliumspring.repository.product.JpaProductRepository;
 import basilium.basiliumspring.repository.product.ProductRepository;
 import basilium.basiliumspring.repository.user.*;
+import basilium.basiliumspring.service.image.ImageService;
 import basilium.basiliumspring.service.product.ProductService;
 import basilium.basiliumspring.service.user.BrandUserService;
 import basilium.basiliumspring.service.user.KakaoService;
@@ -51,5 +54,12 @@ public class SpringConfig {
 
     @Bean
     public KakaoService kakaoService(){return new KakaoService();}
+
+    @Bean
+    public ImageRepository imageRepository(){return new JpaImageRepository(em);}
+
+    @Bean
+    public ImageService imageService(){return new ImageService(imageRepository());}
+
 
 }

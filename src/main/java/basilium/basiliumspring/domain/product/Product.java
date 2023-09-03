@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Product {
@@ -18,8 +15,8 @@ public class Product {
     private String productName;
     private Long productPrice;
     private String productDesc;
-    private String productPhotoUrl;
 
+    private String productPhotoUrl;
     public Product() {
 
     }
@@ -73,6 +70,4 @@ public class Product {
     public void setProductPhotoUrl(String productPhotoUrl) {
         this.productPhotoUrl = productPhotoUrl;
     }
-
-
 }
