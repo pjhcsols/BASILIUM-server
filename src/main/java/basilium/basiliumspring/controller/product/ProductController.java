@@ -3,14 +3,20 @@ package basilium.basiliumspring.controller.product;
 import basilium.basiliumspring.domain.product.Product;
 import basilium.basiliumspring.service.product.ProductService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.core.io.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -19,7 +25,6 @@ import java.util.List;
 public class ProductController {
     //상품전체목록 보기
     //상품 상세보기
-    private static final String UPLOAD_DIR = "C:/Users/kimmo/Desktop/img/";
     private ProductService productService;
 
     @Autowired
@@ -28,42 +33,39 @@ public class ProductController {
     }
 
     //post 요청 /products/add
-    @PostMapping("/add")
-    public ResponseEntity<String> registerProduct(@RequestBody Product product) {
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadProduct(@ModelAttribute Product product, @RequestParam("files") MultipartFile[] files) {
         productService.addProduct(product);
+
+        ResponseEntity<String>ret = productService.savePhotoFiles(files, product.getProductId());
+
+        if (ret.getStatusCode() == HttpStatus.BAD_REQUEST){
+            return ret;
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(product.getProductId().toString());
     }
-    @PostMapping("/upload")
-    public ResponseEntity<String> uploadImage(@RequestParam("imageFile") MultipartFile imageFile) {
-        log.info(imageFile.getName());
-        log.info(imageFile.getOriginalFilename());
-        if (!imageFile.isEmpty()) {
-            try {
-                // 업로드 파일명 설정
-                String originalFileName = imageFile.getOriginalFilename();
-                String newFileName = System.currentTimeMillis() + "_" + originalFileName;
-                File newFile = new File(UPLOAD_DIR + newFileName);
+    @GetMapping("countPhotos/{productId}")
+    public ResponseEntity<Long> countPhotosByProductId(@PathVariable("productId")Long productId){
+        Long result = productService.countPhotos(productId);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+    @GetMapping("/downloadProductPhotos/{productId}")
+    public ResponseEntity<byte[]> downloadProductPhotos(@PathVariable("productId") Long productId, @RequestParam("num") Long num){
+        Resource imageResource = productService.loadFiles(productId, num);
+        try {
+            InputStream inputStream = imageResource.getInputStream();
+            byte[] imageBytes = StreamUtils.copyToByteArray(inputStream);
 
-                // 파일 저장
-                imageFile.transferTo(newFile);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_PNG); // 이미지 타입에 맞게 설정
 
-                return ResponseEntity.status(HttpStatus.CREATED).body("Image uploaded and saved successfully!");
-            } catch (IOException e) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Image upload failed");
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No image selected.");
+            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    /*
-    @PostMapping("/{categoryId}")
-    public ResponseEntity<String> addProduct(@RequestBody Product product, @PathVariable Long categoryId) {
-        productService.addProductAndMapToCategory(product, categoryId);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Product added successfully");
-    }
-    */
-
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
@@ -99,4 +101,6 @@ public class ProductController {
         productService.deleteProductByName(productName);
         return ResponseEntity.ok("Products with name " + productName + " deleted successfully");
     }
+
+
 }

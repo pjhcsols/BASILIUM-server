@@ -33,6 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Value("${jwt.secret}")
     private final String secretKey;
 
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
