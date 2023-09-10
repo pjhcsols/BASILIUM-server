@@ -16,7 +16,6 @@ public class Product {
     private Long productPrice;
     private String productDesc;
 
-    private String productPhotoUrl;
     public Product() {
 
     }
@@ -63,11 +62,4 @@ public class Product {
         this.productDesc = productDesc;
     }
 
-    public String getProductPhotoUrl() {
-        return productPhotoUrl;
-    }
-
-    public void setProductPhotoUrl(String productPhotoUrl) {
-        this.productPhotoUrl = productPhotoUrl;
-    }
 }

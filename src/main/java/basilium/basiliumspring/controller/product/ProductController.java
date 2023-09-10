@@ -2,6 +2,9 @@ package basilium.basiliumspring.controller.product;
 
 import basilium.basiliumspring.domain.product.Product;
 import basilium.basiliumspring.service.product.ProductService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,24 +29,39 @@ public class ProductController {
     //상품전체목록 보기
     //상품 상세보기
     private ProductService productService;
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, ObjectMapper objectMapper) {
         this.productService = productService;
+        this.objectMapper = objectMapper;
+
     }
 
-    //post 요청 /products/add
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadProduct(@ModelAttribute Product product, @RequestParam("files") MultipartFile[] files) {
-        productService.addProduct(product);
+    public ResponseEntity<String> uploadProduct(@RequestParam("product") String strProduct, @RequestPart("files") MultipartFile[] files) {
+        try {
+            log.info(strProduct);
+            // JSON 문자열을 Product 객체로 변환
+            JsonNode rootNode = objectMapper.readTree(strProduct);
+            Product product = new Product();
+            product.setProductName(rootNode.get("productName").asText());
+            product.setProductDesc(rootNode.get("productDesc").asText());
+            product.setProductCategoryId(rootNode.get("productCategoryId").asLong());
+            product.setProductPrice(rootNode.get("productPrice").asLong());
+            productService.addProduct(product);
+            log.info("여기서 까지 OK");
+            ResponseEntity<String> ret = productService.savePhotoFiles(files, product.getProductId());
 
-        ResponseEntity<String>ret = productService.savePhotoFiles(files, product.getProductId());
+            if (ret.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                return ret;
+            }
 
-        if (ret.getStatusCode() == HttpStatus.BAD_REQUEST){
-            return ret;
+            return ResponseEntity.status(HttpStatus.CREATED).body(product.getProductId().toString());
+        } catch (Exception e) {
+            // JSON 파싱 오류 처리
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid JSON data");
         }
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(product.getProductId().toString());
     }
     @GetMapping("countPhotos/{productId}")
     public ResponseEntity<Long> countPhotosByProductId(@PathVariable("productId")Long productId){

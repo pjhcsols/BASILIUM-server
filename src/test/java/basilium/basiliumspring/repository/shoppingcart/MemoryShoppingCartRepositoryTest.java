@@ -1,13 +1,9 @@
 package basilium.basiliumspring.repository.shoppingcart;
 
 import basilium.basiliumspring.domain.shopingcart.ShoppingCart;
-import basilium.basiliumspring.repository.like.LikeRepository;
-import basilium.basiliumspring.repository.like.MemoryLikeRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MemoryShoppingCartRepositoryTest {
     ShoppingCartRepository repository = new MemoryShoppingCartRepository();

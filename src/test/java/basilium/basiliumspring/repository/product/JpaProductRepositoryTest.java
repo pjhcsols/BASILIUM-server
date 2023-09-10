@@ -37,7 +37,7 @@ class JpaProductRepositoryTest {
         product.setProductName("Test Product");
         product.setProductPrice(100L);
         product.setProductDesc("Test Description");
-        product.setProductPhotoUrl("http://example.com/test.jpg");
+
 
 
 
@@ -55,7 +55,7 @@ class JpaProductRepositoryTest {
         product1.setProductName("Test Product1");
         product1.setProductPrice(100L);
         product1.setProductDesc("Test Description1");
-        product1.setProductPhotoUrl("http://example.com/test1.jpg");
+
 
         Product product2 = new Product();
         product2.setProductId(null);
@@ -63,7 +63,7 @@ class JpaProductRepositoryTest {
         product2.setProductName("Test Product2");
         product2.setProductPrice(100L);
         product2.setProductDesc("Test Description2");
-        product2.setProductPhotoUrl("http://example.com/test2.jpg");
+
         productRepository.addProduct(product1);
         productRepository.addProduct(product2);
 
@@ -79,7 +79,7 @@ class JpaProductRepositoryTest {
         product1.setProductName("Test Product");
         product1.setProductPrice(100L);
         product1.setProductDesc("Test Description");
-        product1.setProductPhotoUrl("http://example.com/test.jpg");
+
         productRepository.addProduct(product1);
 
         Assertions.assertThat(productRepository.getProductById(product1.getProductId()).get().getProductPrice()).isEqualTo(product1.getProductPrice());
@@ -93,7 +93,7 @@ class JpaProductRepositoryTest {
         product1.setProductName("Test Product");
         product1.setProductPrice(100L);
         product1.setProductDesc("Test Description");
-        product1.setProductPhotoUrl("http://example.com/test.jpg");
+
 
         productRepository.addProduct(product1);
 
@@ -108,7 +108,7 @@ class JpaProductRepositoryTest {
         product1.setProductName("Test Product");
         product1.setProductPrice(100L);
         product1.setProductDesc("Test Description");
-        product1.setProductPhotoUrl("http://example.com/test.jpg");
+
 
         productRepository.addProduct(product1);
         product1.setProductName("product2");
@@ -126,7 +126,7 @@ class JpaProductRepositoryTest {
         product1.setProductName("Test Product");
         product1.setProductPrice(100L);
         product1.setProductDesc("Test Description");
-        product1.setProductPhotoUrl("http://example.com/test.jpg");
+
         productRepository.addProduct(product1);
 
         productRepository.deleteProductById(product1.getProductId());
@@ -142,7 +142,7 @@ class JpaProductRepositoryTest {
         product1.setProductName("Test Product");
         product1.setProductPrice(100L);
         product1.setProductDesc("Test Description");
-        product1.setProductPhotoUrl("http://example.com/test.jpg");
+
 
         productRepository.addProduct(product1);
 

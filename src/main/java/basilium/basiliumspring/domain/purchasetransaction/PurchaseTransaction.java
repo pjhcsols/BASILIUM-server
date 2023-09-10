@@ -1,20 +1,25 @@
 package basilium.basiliumspring.domain.purchasetransaction;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity
 public class PurchaseTransaction {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long transactionId;
     private String userId;
     private Long productId;
     private Long totalPrice;
     private Payment paymentType;
-    private String purchaseTime;
+    @CreationTimestamp
+    private Date purchaseTime;
 
-    public PurchaseTransaction(Long transactionId, String userId, Long productId, Long totalPrice, Payment paymentType, String purchaseTime) {
-        this.transactionId = transactionId;
-        this.userId = userId;
-        this.productId = productId;
-        this.totalPrice = totalPrice;
-        this.paymentType = paymentType;
-        this.purchaseTime = purchaseTime;
+    public PurchaseTransaction() {
+
     }
 
     public Long getTransactionId() {
@@ -57,11 +62,11 @@ public class PurchaseTransaction {
         this.paymentType = paymentType;
     }
 
-    public String getPurchaseTime() {
+    public Date getPurchaseTime() {
         return purchaseTime;
     }
 
-    public void setPurchaseTime(String purchaseTime) {
+    public void setPurchaseTime(Date purchaseTime) {
         this.purchaseTime = purchaseTime;
     }
 }

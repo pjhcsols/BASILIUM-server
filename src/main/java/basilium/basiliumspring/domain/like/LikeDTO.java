@@ -1,14 +1,20 @@
 package basilium.basiliumspring.domain.like;
 
-public class Like {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class LikeDTO {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userId;
     private Long productId;
 
-    public Like(Long id, String userId, Long productId) {
-        this.id = id;
-        this.userId = userId;
-        this.productId = productId;
+    public LikeDTO() {
+
     }
 
     public Long getId() {

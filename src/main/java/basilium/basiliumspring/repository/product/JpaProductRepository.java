@@ -53,7 +53,6 @@ public class JpaProductRepository implements ProductRepository{
             existingProduct.setProductName(updatedProduct.getProductName());
             existingProduct.setProductPrice(updatedProduct.getProductPrice());
             existingProduct.setProductId(updatedProduct.getProductId());
-            existingProduct.setProductPhotoUrl(updatedProduct.getProductPhotoUrl());
             em.merge(existingProduct); // 변경 내용 저장
         }
     }

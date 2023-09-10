@@ -41,7 +41,7 @@ class ProductServiceTest {
         product1.setProductName("Test Product1");
         product1.setProductPrice(100L);
         product1.setProductDesc("Test Description1");
-        product1.setProductPhotoUrl("http://example.com/test1.jpg");
+
 
         productService.addProduct(product1);
 
@@ -61,7 +61,7 @@ class ProductServiceTest {
         product1.setProductName("Test Product1");
         product1.setProductPrice(100L);
         product1.setProductDesc("Test Description1");
-        product1.setProductPhotoUrl("http://example.com/test1.jpg");
+
 
         productService.addProduct(product1);
 
@@ -76,7 +76,7 @@ class ProductServiceTest {
         updatedProduct.setProductName("Updated Product1");
         updatedProduct.setProductPrice(200L);
         updatedProduct.setProductDesc("Updated Description1");
-        updatedProduct.setProductPhotoUrl("http://example.com/updated1.jpg");
+
 
         productService.updateProduct(updatedProduct);
 
@@ -97,7 +97,7 @@ class ProductServiceTest {
         product1.setProductName("Test Product1");
         product1.setProductPrice(100L);
         product1.setProductDesc("Test Description1");
-        product1.setProductPhotoUrl("http://example.com/test1.jpg");
+
 
         productService.addProduct(product1);
 

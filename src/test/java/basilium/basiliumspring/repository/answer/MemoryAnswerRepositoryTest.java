@@ -1,14 +1,10 @@
 package basilium.basiliumspring.repository.answer;
 
 import basilium.basiliumspring.domain.answer.Answer;
-import basilium.basiliumspring.repository.like.LikeRepository;
-import basilium.basiliumspring.repository.like.MemoryLikeRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MemoryAnswerRepositoryTest {
     AnswerRepository repository = new MemoryAnswerRepository();
