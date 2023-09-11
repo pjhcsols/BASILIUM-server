@@ -1,12 +1,23 @@
 package basilium.basiliumspring.domain.review;
 
+
+import javax.persistence.*;
+
+
+@Entity
 public class Review {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
     private Long userId;
     private Long productId;
     private String review;
     private String reviewDate;
 
+    public Review(){
+
+    }
+/*
     public Review(Long reviewId, Long userId, Long productId, String review, String reviewDate) {
         this.reviewId = reviewId;
         this.userId = userId;
@@ -14,7 +25,7 @@ public class Review {
         this.review = review;
         this.reviewDate = reviewDate;
     }
-
+*/
 
     public Long getReviewId() {
         return reviewId;

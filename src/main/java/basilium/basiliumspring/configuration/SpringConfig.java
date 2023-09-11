@@ -8,6 +8,8 @@ import basilium.basiliumspring.repository.product.JpaProductRepository;
 import basilium.basiliumspring.repository.product.ProductRepository;
 import basilium.basiliumspring.repository.purchasetransaction.JpaPurchaseTransactionRepository;
 import basilium.basiliumspring.repository.purchasetransaction.PurchaseTransactionRepository;
+import basilium.basiliumspring.repository.review.JpaReviewRepository;
+import basilium.basiliumspring.repository.review.ReviewRepository;
 import basilium.basiliumspring.repository.user.*;
 import basilium.basiliumspring.service.like.LikeService;
 import basilium.basiliumspring.service.product.ProductService;
@@ -57,6 +59,8 @@ public class SpringConfig {
     public ProductService productService(){return new ProductService(productRepository(), imageRepository());}
     @Bean
     public ProductRepository productRepository(){return new JpaProductRepository(em);}
+    @Bean
+    public ReviewRepository reviewRepository(){return new JpaReviewRepository(em);}
 
     @Bean
     public KakaoService kakaoService(){return new KakaoService();}

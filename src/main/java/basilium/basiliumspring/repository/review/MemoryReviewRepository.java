@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/*
 public class MemoryReviewRepository implements ReviewRepository {
 
         private Map<Long, Review> reviewMap;
@@ -41,7 +41,7 @@ public class MemoryReviewRepository implements ReviewRepository {
             }
             return result;
         }
-        /*
+        // 밑에 주석
         @Override
         public List<Review> getReviewsByProductName(String productName) {
             List<Review> result = new ArrayList<>();
@@ -53,7 +53,7 @@ public class MemoryReviewRepository implements ReviewRepository {
             }
             return result;
         }
-*/
+
         @Override
         public List<Review> getReviewsByUserId(Long userId) {
             List<Review> result = new ArrayList<>();
@@ -79,5 +79,4 @@ public class MemoryReviewRepository implements ReviewRepository {
             reviewMap.remove(reviewId);
         }
 }
-
-
+*/

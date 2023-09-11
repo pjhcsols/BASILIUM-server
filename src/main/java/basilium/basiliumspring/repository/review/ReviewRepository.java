@@ -27,4 +27,6 @@ public interface ReviewRepository { //CRUD
 
     // 리뷰 삭제
     void deleteReview(Long reviewId); //관리자
+
+    void deleteAll();
 }
