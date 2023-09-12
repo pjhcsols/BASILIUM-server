@@ -10,15 +10,17 @@ import basilium.basiliumspring.repository.purchasetransaction.JpaPurchaseTransac
 import basilium.basiliumspring.repository.purchasetransaction.PurchaseTransactionRepository;
 import basilium.basiliumspring.repository.review.JpaReviewRepository;
 import basilium.basiliumspring.repository.review.ReviewRepository;
+import basilium.basiliumspring.repository.shoppingcart.JpaShoppingCartRepository;
+import basilium.basiliumspring.repository.shoppingcart.ShoppingCartRepository;
 import basilium.basiliumspring.repository.user.*;
 import basilium.basiliumspring.service.like.LikeService;
 import basilium.basiliumspring.service.product.ProductService;
 import basilium.basiliumspring.service.purchasetransaction.PurchaseTransactionService;
+import basilium.basiliumspring.service.shoppingcart.ShoppingCartService;
 import basilium.basiliumspring.service.user.BrandUserService;
 import basilium.basiliumspring.service.user.KakaoService;
 import basilium.basiliumspring.service.user.NormalUserService;
 import basilium.basiliumspring.service.user.SuperUserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -78,4 +80,9 @@ public class SpringConfig {
     @Bean
     public PurchaseTransactionRepository purchaseTransactionRepository(){return new JpaPurchaseTransactionRepository(em);}
 
+    @Bean
+    public ShoppingCartService shoppingCartService(){return new ShoppingCartService(shoppingCartRepository());}
+
+    @Bean
+    public ShoppingCartRepository shoppingCartRepository(){return new JpaShoppingCartRepository(em);}
 }

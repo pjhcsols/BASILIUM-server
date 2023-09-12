@@ -34,7 +34,7 @@ public class PurchaseTransactionController {
         return ResponseEntity.ok("successfully delete transaction");
     }
 
-    @GetMapping("/likeInfos")
+    @GetMapping("/transactionInfos")
     public ResponseEntity<List<PurchaseTransaction>> getTransactionInfoByUserId(@RequestBody String userId){
         List<PurchaseTransaction> ret = purchaseTransactionService.getPurchaseTransactionByUserId(userId);
         return ResponseEntity.ok(ret);
