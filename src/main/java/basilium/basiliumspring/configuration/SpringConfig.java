@@ -16,6 +16,7 @@ import basilium.basiliumspring.repository.user.*;
 import basilium.basiliumspring.service.like.LikeService;
 import basilium.basiliumspring.service.product.ProductService;
 import basilium.basiliumspring.service.purchasetransaction.PurchaseTransactionService;
+import basilium.basiliumspring.service.review.ReviewService;
 import basilium.basiliumspring.service.shoppingcart.ShoppingCartService;
 import basilium.basiliumspring.service.user.BrandUserService;
 import basilium.basiliumspring.service.user.KakaoService;
@@ -63,6 +64,10 @@ public class SpringConfig {
     public ProductRepository productRepository(){return new JpaProductRepository(em);}
     @Bean
     public ReviewRepository reviewRepository(){return new JpaReviewRepository(em);}
+    @Bean
+    public ReviewService reviewService() {
+        return new ReviewService(reviewRepository());
+    }
 
     @Bean
     public KakaoService kakaoService(){return new KakaoService();}

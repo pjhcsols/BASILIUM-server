@@ -13,6 +13,7 @@ public class Review {
     private Long productId;
     private String review;
     private String reviewDate;
+    private int rating; // 리뷰 평점
 
     public Review(){
 
@@ -26,6 +27,9 @@ public class Review {
         this.reviewDate = reviewDate;
     }
 */
+    public int getRating() {return rating;}
+
+    public void setRating(int rating) {this.rating = rating;}
 
     public Long getReviewId() {
         return reviewId;
