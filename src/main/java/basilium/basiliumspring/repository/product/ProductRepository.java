@@ -14,6 +14,8 @@ public interface ProductRepository {
     void deleteProductById(Long productId);//product id 로 지우기
     void deleteProductByName(String productName);//product name 으로 지우기
     void deleteAll();
+
+    List<Product> getProductInfos(List<Long> values);
 /*
     void mapProductToCategory(Long productId, Long categoryId); //add 후에 발동 //새로추가
     //test code짜기

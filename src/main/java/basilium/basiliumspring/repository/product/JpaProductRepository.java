@@ -78,4 +78,8 @@ public class JpaProductRepository implements ProductRepository{
         em.createQuery("delete from Product").executeUpdate();
     }
 
+    @Override
+    public List<Product> getProductInfos(List<Long> values) {
+        return em.createQuery("select p from Product p where p.productId in :ids", Product.class).setParameter("ids", values).getResultList();
+    }
 }

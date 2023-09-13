@@ -128,4 +128,8 @@ public class ProductService {
     public Long countPhotos(Long productId){
         return imageRepository.countImagesByProductId(productId);
     }
+
+    public List<Product> getProductInfosByList(List<Long> values){
+        return productRepository.getProductInfos(values);
+    }
 }

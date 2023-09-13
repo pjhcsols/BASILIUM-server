@@ -120,5 +120,10 @@ public class ProductController {
         return ResponseEntity.ok("Products with name " + productName + " deleted successfully");
     }
 
+    @GetMapping("/productsInfo")
+    public ResponseEntity<List<Product>> getProductsInfoByList(@RequestParam List<Long> values){
+        List<Product> resultList = productService.getProductInfosByList(values);
+        return ResponseEntity.ok(resultList);
+    }
 
 }
