@@ -26,8 +26,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    //상품전체목록 보기
-    //상품 상세보기
     private ProductService productService;
     private final ObjectMapper objectMapper;
 

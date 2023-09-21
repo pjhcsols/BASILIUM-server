@@ -41,7 +41,7 @@ public class LikeController {
     }
 
     @GetMapping("/likeInfos")
-    public ResponseEntity<List<LikeDTO>> getLikeInfoByUserId(@RequestBody String userId){
+    public ResponseEntity<List<LikeDTO>> getLikeInfoByUserId(@RequestParam String userId){
         System.out.println(userId);
         List<LikeDTO> likeDTOList = likeService.getUserLikeInfo(userId);
         return ResponseEntity.ok(likeDTOList);

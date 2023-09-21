@@ -35,7 +35,7 @@ public class PurchaseTransactionController {
     }
 
     @GetMapping("/transactionInfos")
-    public ResponseEntity<List<PurchaseTransaction>> getTransactionInfoByUserId(@RequestBody String userId){
+    public ResponseEntity<List<PurchaseTransaction>> getTransactionInfoByUserId(@RequestParam String userId){
         List<PurchaseTransaction> ret = purchaseTransactionService.getPurchaseTransactionByUserId(userId);
         return ResponseEntity.ok(ret);
     }

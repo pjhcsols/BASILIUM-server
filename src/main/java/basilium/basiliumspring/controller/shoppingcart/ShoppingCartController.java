@@ -34,7 +34,7 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/shoppingCartInfos")
-    public ResponseEntity<List<ShoppingCart>> getTransactionInfoByUserId(@RequestBody String userId){
+    public ResponseEntity<List<ShoppingCart>> getTransactionInfoByUserId(@RequestParam String userId){
         List<ShoppingCart> ret = shoppingCartService.getListByUserId(userId);
         return ResponseEntity.ok(ret);
     }
