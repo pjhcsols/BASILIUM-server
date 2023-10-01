@@ -1,11 +1,12 @@
 package basilium.basiliumspring.repository.user;
 
 import basilium.basiliumspring.domain.user.NormalUser;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 public class JpaNormalUserRepository implements NormalUserRepository{
     private final EntityManager em;
     public JpaNormalUserRepository(EntityManager em) {

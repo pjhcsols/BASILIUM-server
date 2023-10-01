@@ -1,5 +1,6 @@
 package basilium.basiliumspring.service.user;
 
+import basilium.basiliumspring.configuration.JwtFilter;
 import basilium.basiliumspring.domain.user.JoinStatus;
 import basilium.basiliumspring.domain.user.LoginStatus;
 import basilium.basiliumspring.domain.user.NormalUser;
@@ -7,8 +8,10 @@ import basilium.basiliumspring.repository.user.NormalUserRepository;
 import basilium.basiliumspring.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Transactional
@@ -52,11 +55,10 @@ public class NormalUserService {
 
     public LoginStatus login(String userId, String userPassword){
         Optional<NormalUser> tar = normalUserRepository.findById(userId);
-        if (tar.get()== null || !(tar.get().getPassword().equals(userPassword))){
+        if (tar.isEmpty() || !(tar.get().getPassword().equals(userPassword))){
             return LoginStatus.FAIL;
         }
         return LoginStatus.SUCCESS;
-
     }
     public String afterSuccessLogin(String userId){
         return JwtUtil.createJwt(userId, "normal", secretKey, expiredMs);
@@ -85,5 +87,18 @@ public class NormalUserService {
                 hasSpecialChar = true;
         }
         if (!(hasUpperCase && hasLowerCase && hasSpecialChar))throw new IllegalStateException("비밀번호는 영문 소문자, 대문자, 특수문자를 포함해야됩니다.");
+    }
+
+    public NormalUser getUserInfoByJWT(HttpServletRequest request){
+        String authorizationHeader = request.getHeader("Authorization");
+        String jwtToken = "";
+
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            jwtToken = authorizationHeader.substring(7);
+        }
+
+        String userId = JwtUtil.getUserName(jwtToken, secretKey);
+        Optional<NormalUser> ret = normalUserRepository.findById(userId);
+        return ret.orElse(null);
     }
 }

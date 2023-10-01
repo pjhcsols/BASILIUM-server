@@ -6,16 +6,17 @@ import basilium.basiliumspring.domain.user.LoginStatus;
 import basilium.basiliumspring.domain.user.NormalUser;
 import basilium.basiliumspring.service.user.NormalUserService;
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
+@Slf4j
 @RestController
 @RequestMapping("/v1/normalUser")
 public class NormalUserController {
@@ -35,10 +36,10 @@ public class NormalUserController {
     @PostMapping("/login")
     public ResponseEntity<String> loginNormalUser(@RequestBody LoginRequest loginRequest){
         LoginStatus loginResult = normalUserService.login(loginRequest.getUserId(), loginRequest.getUserPassword());
-
         if (loginResult != LoginStatus.SUCCESS)return new ResponseEntity<>(loginResult.getMessage(), loginResult.getStatus());
 
         String token = normalUserService.afterSuccessLogin(loginRequest.getUserId());
+        log.info(token);
         return ResponseEntity.ok().body(token);
     }
 
@@ -48,6 +49,14 @@ public class NormalUserController {
 
     }
 
+    @GetMapping("/userInfo")
+    public ResponseEntity<NormalUser> userInfo(HttpServletRequest request){
+        log.info("시작 !!!!");
+        NormalUser ret = normalUserService.getUserInfoByJWT(request);
+        log.info(ret.getName());
+        log.info(ret.getId());
 
+        return ResponseEntity.ok(ret);
+    }
 
 }
