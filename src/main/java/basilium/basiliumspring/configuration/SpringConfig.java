@@ -66,7 +66,7 @@ public class SpringConfig {
     public ReviewRepository reviewRepository(){return new JpaReviewRepository(em);}
     @Bean
     public ReviewService reviewService() {
-        return new ReviewService(reviewRepository());
+        return new ReviewService(reviewRepository(), imageRepository());
     }
 
     @Bean

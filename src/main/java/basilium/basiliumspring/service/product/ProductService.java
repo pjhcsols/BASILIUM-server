@@ -33,7 +33,7 @@ import java.util.List;
 @Slf4j
 public class ProductService {
 
-    private String UPLOAD_DIR = "C:/Users/kimmo/Desktop/img/";
+    private String UPLOAD_DIR = "/Users/gimseungjun/Desktop/BASILIUM-server/productPhoto/";
     private final ProductRepository productRepository;
     private final ImageRepository imageRepository;
     public ProductService(ProductRepository productRepository, ImageRepository imageRepository) {

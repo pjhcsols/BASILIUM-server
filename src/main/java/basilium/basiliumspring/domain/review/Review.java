@@ -9,7 +9,7 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
-    private Long userId;
+    private String userId;
     private Long productId;
     private String review;
     private String reviewDate;
@@ -39,11 +39,11 @@ public class Review {
         this.reviewId = reviewId;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

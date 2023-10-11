@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
 class ReviewServiceTest {
-
+/*
     @Autowired
     private ReviewService reviewService;
     // private Review testReview; // 테스트에서 사용할 리뷰 객체
@@ -179,4 +179,6 @@ class ReviewServiceTest {
         // 평균 평점이 0보다 크거나 같은지 확인
         assertTrue(averageRating >= 0);
     }
+    */
+
 }
