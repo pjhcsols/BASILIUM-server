@@ -40,6 +40,13 @@ public class ProductService {
         this.productRepository = productRepository;
         this.imageRepository = imageRepository;
     }
+    //상품 생성
+    /***********더미생성**********/
+    public Product createProduct(Product product){
+        return productRepository.createProduct(product);
+    }
+    /***********더미생성**********/
+
 
     public void addProduct(Product product) {
         productRepository.addProduct(product);

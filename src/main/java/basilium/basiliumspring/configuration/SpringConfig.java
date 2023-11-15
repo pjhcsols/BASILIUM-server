@@ -2,10 +2,7 @@ package basilium.basiliumspring.configuration;
 
 import basilium.basiliumspring.repository.like.JpaLikeRepository;
 import basilium.basiliumspring.repository.like.LikeRepository;
-import basilium.basiliumspring.repository.product.ImageRepository;
-import basilium.basiliumspring.repository.product.JpaImageRepository;
-import basilium.basiliumspring.repository.product.JpaProductRepository;
-import basilium.basiliumspring.repository.product.ProductRepository;
+import basilium.basiliumspring.repository.product.*;
 import basilium.basiliumspring.repository.purchasetransaction.JpaPurchaseTransactionRepository;
 import basilium.basiliumspring.repository.purchasetransaction.PurchaseTransactionRepository;
 import basilium.basiliumspring.repository.review.JpaReviewRepository;
@@ -61,7 +58,9 @@ public class SpringConfig {
     @Bean
     public ProductService productService(){return new ProductService(productRepository(), imageRepository());}
     @Bean
-    public ProductRepository productRepository(){return new JpaProductRepository(em);}
+    public JpaProductRepositoryLegend jpaProductRepositoryLegend(){return new JpaProductRepositoryLegend(em);}
+    @Bean
+    public ProductRepository productRepository(){return new JpaProductRepository(em, jpaProductRepositoryLegend());}
     @Bean
     public ReviewRepository reviewRepository(){return new JpaReviewRepository(em);}
     @Bean
@@ -90,4 +89,6 @@ public class SpringConfig {
 
     @Bean
     public ShoppingCartRepository shoppingCartRepository(){return new JpaShoppingCartRepository(em);}
+
+
 }

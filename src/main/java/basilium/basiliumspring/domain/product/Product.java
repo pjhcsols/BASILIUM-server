@@ -1,12 +1,12 @@
 package basilium.basiliumspring.domain.product;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +22,8 @@ public class Product {
 
     // Getter and Setter methods for each field
     // (Omitted for brevity, but you should include them in your actual code)
+
+
     public Long getProductId() {
         return productId;
     }

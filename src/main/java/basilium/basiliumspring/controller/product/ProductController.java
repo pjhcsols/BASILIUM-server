@@ -30,6 +30,26 @@ public class ProductController {
         this.objectMapper = objectMapper;
 
     }
+    /***********더미생성**********/
+    //더미 생성
+    @PostMapping("/create")
+    public Product createProduct(@RequestBody Product product){
+        return productService.createProduct(product);
+    }
+    /***********더미생성**********/
+    /*
+    @GetMapping("/allproduct")
+    public ResponseEntity<List<Product>> getAllProducts() {
+        List<Product> products = productService.getAllProducts();
+        return ResponseEntity.ok(products);
+    }
+    */
+
+    @GetMapping("/allproduct")
+    public List<Product> getAllProducts(){
+        return productService.getAllProducts();
+    }
+
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadProduct(@RequestParam("product") String strProduct, @RequestPart("files") MultipartFile[] files) {
@@ -78,11 +98,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productService.getAllProducts();
-        return ResponseEntity.ok(products);
-    }
+
 
     @GetMapping("/{productId}")
     public ResponseEntity<Product> getProductById(@PathVariable Long productId) {

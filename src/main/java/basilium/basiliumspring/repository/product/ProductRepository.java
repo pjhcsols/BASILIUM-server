@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository {
+    /***********더미생성**********/
+    Product createProduct(Product product);
+    /***********더미생성**********/
     void addProduct(Product product);
     List<Product> getAllProducts();
     Optional<Product> getProductById(Long productId); //id로 조회

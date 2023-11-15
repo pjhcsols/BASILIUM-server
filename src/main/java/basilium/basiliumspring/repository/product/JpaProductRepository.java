@@ -1,31 +1,109 @@
 package basilium.basiliumspring.repository.product;
 
 import basilium.basiliumspring.domain.product.Product;
-import basilium.basiliumspring.domain.user.NormalUser;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+@Slf4j
+@RequiredArgsConstructor
 public class JpaProductRepository implements ProductRepository{
 
     private EntityManager em;
 
-    public JpaProductRepository(EntityManager em) {
+
+    private final JpaProductRepositoryLegend jpaProductRepositoryLegend;
+
+    public JpaProductRepository(EntityManager em, JpaProductRepositoryLegend jpaProductRepositoryLegend) {
         this.em = em;
+        this.jpaProductRepositoryLegend = jpaProductRepositoryLegend;
     }
+
+
+
+    private Long productId;
+    private Long productCategoryId;
+    private String productName;
+    private Long productPrice;
+    private String productDesc;
+
+
+
+
+    /*********더미데이터 생성로직**************/
+    public Product makeProduct(Long categoryId, String name, Long price, String desc){
+        Product product = new Product();
+        product.setProductCategoryId(categoryId);
+        product.setProductName(name);
+        product.setProductPrice(price);
+        product.setProductDesc(desc);
+
+        //product.setStoreImage(null);
+
+        return product;
+    }
+
+    @PostConstruct
+    public void init() {
+        try {
+            List<Product> products = new ArrayList<>();
+            products.add(makeProduct(1L, "바실리움 후드티", 68000L, "좋은 맨투승준"));
+            products.add(makeProduct(1L, "바실리움 백로고 맨투맨(블랙)", 58000L, "깔쌈한 맨투맨 등등"));
+            products.add(makeProduct(1L, "바실리움 백로고 맨투맨(화이트)", 58000L, "깔쌈한 맨투맨 등등"));
+            products.add(makeProduct(1L, "바실리움 백로고 맨투맨(그레이)", 58000L, "깔쌈한 맨투맨 등등"));
+            products.add(makeProduct(2L, "바실리움 팬츠(블랙)", 58000L, "깔쌈한 맨투맨 등등"));
+            products.add(makeProduct(2L, "바실리움 팬츠(화이트)", 58000L, "깔쌈한 맨투맨 등등"));
+            products.add(makeProduct(2L, "바실리움 팬츠(그레이)", 58000L, "깔쌈한 맨투맨 등등"));
+            products.add(makeProduct(1L, "바실리움 반팔(블랙)", 58000L, "깔쌈한 맨투맨 등등"));
+            products.add(makeProduct(1L, "바실리움 반팔(화이트)", 58000L, "깔쌈한 맨투맨 등등"));
+
+            for (Product product : products) {
+                jpaProductRepositoryLegend.createProduct(product);
+                log.info("Product inserted: {}", product.getProductName());
+            }
+        } catch (Exception e) {
+            log.error("Error during initialization: " + e.getMessage());
+        }
+    }
+    @Override
+    public Product createProduct(Product product) {
+        // 고유 ID 생성 및 설정
+        //store.setStoreId(null); // ID는 자동 생성
+        em.persist(product);
+        return product;
+    }
+
+    /*********더미데이터 생성로직**************/
+
+
+
+
 
     @Override
     public void addProduct(Product product) {
         em.persist(product);
     }
-
+/*
     @Override
     public List<Product> getAllProducts() {
         return em.createQuery("select m from Product m", Product.class)
                 .getResultList();
+    }
+*/
+    @Override
+    public List<Product> getAllProducts() {
+        String jpql = "SELECT s FROM Product s";
+        TypedQuery<Product> query = em.createQuery(jpql,Product.class);
+        return query.getResultList();
     }
 
     @Override
